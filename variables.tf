@@ -266,11 +266,6 @@ variable "service_accounts" {
     project_roles               = optional(list(string))
     iam_non_authoritative_roles = optional(list(string))
     github_action_repositories  = optional(list(string))
-    runtime_service_accounts = optional(list(object({
-      cluster_id      = string
-      namespace       = string
-      service_account = string
-    })))
   }))
 
   default = {}

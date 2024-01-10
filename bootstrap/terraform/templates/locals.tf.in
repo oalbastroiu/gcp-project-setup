@@ -4,6 +4,6 @@ locals {
   iac_service_account = "${SA_FULL_NAME}"
 
   # IAM ready strings (with prefix like group, serviceAccount, ...)
-  iam_manager_group       = "local:$${local.manager_group}"
+  iam_manager_group       = "local:${local.manager_group}"
   iam_iac_service_account = "serviceAccount:$${local.iac_service_account}"
 }
