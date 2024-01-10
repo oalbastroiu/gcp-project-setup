@@ -7,7 +7,7 @@ resource "google_project_iam_member" "manager_group" {
   for_each = toset(local.manager_group_iam_roles)
 
   role    = each.key
-  member  = "group:${var.manager_group}"
+  member  = "user:${var.manager_group}"
   project = var.project
 }
 
@@ -89,7 +89,7 @@ resource "google_service_account_iam_member" "this" {
   for_each = toset(local.manager_group_service_account_iam_roles)
 
   role               = each.key
-  member             = "group:${var.manager_group}"
+  member             = "user:${var.manager_group}"
   service_account_id = google_service_account.this.name
 
   depends_on = [

@@ -1,20 +1,20 @@
 locals {
-  always_add_permissions = {
-    "roles/editor" = compact(flatten(
-      concat(
-        # always add cloud services, see: https://cloud.google.com/iam/docs/service-accounts#google-managed
-        [format("serviceAccount:%s@cloudservices.gserviceaccount.com", data.google_project.project.number)],
-        var.deprivilege_compute_engine_sa ? [] : [format("serviceAccount:%s-compute@developer.gserviceaccount.com", data.google_project.project.number)]
-      )
-    ))
-  }
+  # always_add_permissions = {
+  #   "roles/editor" = compact(flatten(
+  #     concat(
+  #       # always add cloud services, see: https://cloud.google.com/iam/docs/service-accounts#google-managed
+  #       [format("serviceAccount:%s@cloudservices.gserviceaccount.com", data.google_project.project.number)],
+  #       var.deprivilege_compute_engine_sa ? [] : [format("serviceAccount:%s-compute@developer.gserviceaccount.com", data.google_project.project.number)]
+  #     )
+  #   ))
+  # }
 
   sa_roles = compact(flatten(concat([for sa, sa_cfg in var.service_accounts : sa_cfg.project_roles if sa_cfg.project_roles != null])))
 
   managed_roles = toset(
     compact(
       concat(
-        keys(local.always_add_permissions),
+        # keys(local.always_add_permissions),
         local.active_roles,
         keys(var.roles),
         local.sa_roles
@@ -33,7 +33,7 @@ resource "google_project_iam_binding" "roles" {
   members = compact(
     concat(
       contains(keys(var.roles), each.key) ? var.roles[each.key] : [],
-      contains(keys(local.always_add_permissions), each.key) ? local.always_add_permissions[each.key] : [],
+      # contains(keys(local.always_add_permissions), each.key) ? local.always_add_permissions[each.key] : [],
       [for sa, sa_cfg in var.service_accounts :
         "serviceAccount:${google_service_account.service_accounts[sa].email}"
         if contains(sa_cfg.project_roles != null ? sa_cfg.project_roles : [], each.key)

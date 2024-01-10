@@ -1,12 +1,10 @@
 module "project-cfg" {
-  source     = "metro-digital/cf-projectcfg/google"
+  source     = "github.com/oalbastroiu/gcp-project-setup"
   project_id = local.project_id
-  version    = ">=2.1"
 
   roles = {
     "roles/viewer" = [
-      local.iam_manager_group,
-      local.iam_developer_group
+      local.iam_manager_group
     ],
     "roles/cloudsupport.techSupportEditor" = [ local.iam_manager_group ],
   }

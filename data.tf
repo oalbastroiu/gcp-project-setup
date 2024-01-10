@@ -10,13 +10,6 @@ data "google_netblock_ip_ranges" "iap-forwarders" {
   range_type = "iap-forwarders"
 }
 
-locals {
-  metro_netblocks = {
-    ipv4 = split(" ", data.external.metro_netblocks.result.ipv4)
-    ipv6 = split(" ", data.external.metro_netblocks.result.ipv6)
-  }
-}
-
 data "google_client_config" "current" {
 }
 

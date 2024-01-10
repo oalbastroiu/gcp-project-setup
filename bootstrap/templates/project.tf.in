@@ -1,7 +1,6 @@
 module "project-cfg" {
-  source     = "metro-digital/cf-projectcfg/google"
+  source     = "github.com/oalbastroiu/gcp-project-setup"
   project_id = local.project_id
-  version    = ">=2.1"
 
   roles = {
     "roles/viewer" = [

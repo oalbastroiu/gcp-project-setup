@@ -82,15 +82,7 @@ data "google_iam_policy" "service_accounts" {
           repo
         )
       ] : [],
-      # Cloud Native Runtime Service Accounts
-      each.value.runtime_service_accounts != null ? [
-        for runtime_sa in each.value.runtime_service_accounts : format(
-          "principal://iam.googleapis.com/%s/subject/system:serviceaccount:%s:%s",
-          google_iam_workload_identity_pool.runtime-k8s[runtime_sa.cluster_id].name,
-          runtime_sa.namespace,
-          runtime_sa.service_account
-        )
-      ] : [],
+ 
       # if roles/iam.workloadIdentityUser is given by user in the authoritative iam section pick this data
       contains(keys(each.value.iam), "roles/iam.workloadIdentityUser") ? each.value.iam["roles/iam.workloadIdentityUser"] :
       # else pick existing data fetched via script if role exists in the authoritative iam parameter
