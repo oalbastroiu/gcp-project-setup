@@ -1,0 +1,22 @@
+module "tf-state-bucket" {
+  source = "metro-digital/cf-bucket/google"
+  version    = ">=1.0"
+
+  project_id     = module.project-cfg.project_id
+  name           = "${GCS_BUCKET}"
+  location       = "EU"
+  storage_class  = "MULTI_REGIONAL"
+  uniform_access = true
+  versioning     = true
+
+  lifecycle_rules = [
+    {
+      action = {
+        type = "Delete"
+      },
+      condition = {
+        num_newer_versions = 30
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+locals {
+  project_id          = "${GCP_PROJECT_ID}"
+  manager_group       = "${MANAGER_GROUP}"
+  developer_group     = "${DEVELOPER_GROUP}"
+  iac_service_account = "${SA_FULL_NAME}"
+
+  # IAM ready strings (with prefix like group, serviceAccount, ...)
+  iam_manager_group       = "group:$${local.manager_group}"
+  iam_developer_group     = "group:$${local.developer_group}"
+  iam_iac_service_account = "serviceAccount:$${local.iac_service_account}"
+}

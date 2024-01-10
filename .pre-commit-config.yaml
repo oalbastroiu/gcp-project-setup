@@ -1,0 +1,39 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: f71fa2c1f9cf5cb705f73dffe4b21f7c61470ba9  # frozen: v4.4.0
+    hooks:
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: ['--fix', 'lf']
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: 7fb95618a952c1b4e86f35ee9103d3a67a86df0d  # frozen: v1.77.1
+    hooks:
+      - id: terraform_fmt
+        exclude: ^/.+/$
+      - id: terraform_tflint
+        exclude: ^/.+/$
+      - id: terraform_tfsec
+        exclude: ^/.+/$
+        args:
+          - --args=--config-file=__GIT_WORKING_DIR__/.tfsec/config.yml
+      - id: terraform_docs
+        args:
+          - --args=--config=.terraform-docs.yml
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: 9d0f59876dc6882e263b2657ab42a1ced4c0207d  # frozen: v1.30.0
+    hooks:
+      - id: yamllint
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 38980559e3a605691d6579f96222c30778e5a69e  # frozen: 3.0.0
+    hooks:
+      - id: script-must-have-extension
+      - id: shellcheck
+      - id: shfmt
+  - repo: https://github.com/thlorenz/doctoc
+    rev: 70fdcd39ef919754011a827bd25f23a0b141c3c3  # frozen: v2.2.0
+    hooks:
+      - id: doctoc
+        args: ['--github', '--title', '## Table of Contents', '--update-only']
