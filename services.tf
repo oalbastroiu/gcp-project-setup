@@ -10,6 +10,7 @@ locals {
           "iap.googleapis.com",
           "servicenetworking.googleapis.com"
         ],
+        var.enabled_services
       )
     )
   )
