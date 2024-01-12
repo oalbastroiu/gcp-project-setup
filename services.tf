@@ -10,10 +10,6 @@ locals {
           "iap.googleapis.com",
           "servicenetworking.googleapis.com"
         ],
-        # 2. Enable vpcaccess.googleapis.com if one network requires it
-        [for r in keys(var.vpc_regions) : "vpcaccess.googleapis.com" if var.vpc_regions[r].vpcaccess],
-        # 3. All services provided by the user
-        var.enabled_services
       )
     )
   )
